@@ -12,7 +12,7 @@ interface Contact {
   createdAt: string;
 }
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = process.env.BACKEND_URL + '/api';
 
 export default function ContactList() {
   const [contacts, setContacts] = useState<Contact[]>([]);

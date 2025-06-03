@@ -30,7 +30,7 @@ const StatsForm: React.FC = () => {
 
   const fetchStat = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/stats/${id}`, {
+      const response = await fetch(`${process.env.BACKEND_URL}/api/stats/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

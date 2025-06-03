@@ -11,7 +11,7 @@ interface Project {
   image: string;
 }
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = process.env.BACKEND_URL + '/api';
 
 // Funzione per formattare la data
 const formatDate = (dateString: string): string => {

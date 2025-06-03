@@ -11,7 +11,7 @@ interface Document {
   createdAt: string;
 }
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = process.env.BACKEND_URL + '/api';
 
 const DocumentsList: React.FC = () => {
   const [documents, setDocuments] = useState<Document[]>([]);
