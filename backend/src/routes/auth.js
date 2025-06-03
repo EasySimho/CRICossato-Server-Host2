@@ -8,8 +8,8 @@ const router = express.Router();
 // Hardcoded admin user (in a real app, this would be in a database)
 const adminUser = {
   username: 'admin',
-  // Default password: admin123
-  password: '$2a$10$LWs05qQ5fDxtIlDiaZLLouAJCBeeHFTSQCEGnH3s54QgHmeiDFqQ6'
+  // Default password: CriCossato
+  password: '$2b$10$mXQOVHFkr.Blm.LCa4CjhuLKeBbtGNcu/OaepZ6WfRRccKIZUyqpO'
 };
 
 router.post('/login', [
