@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Upload, X } from 'lucide-react';
 
-const API_URL = process.env.BACKEND_URL + '/api';
+  const API_URL = import.meta.env.PROD
+  ? `${process.env.URL_PUBBLICO}/api`
+  : '/api';
 
 interface DocumentFormData {
   title: string;

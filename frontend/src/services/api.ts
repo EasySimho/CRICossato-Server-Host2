@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_URL = process.env.BACKEND_URL + '/api';
+const API_URL = import.meta.env.PROD 
+  ? `${process.env.URL_PUBBLICO}/api`
+  : '/api';
 
 const api = axios.create({
   baseURL: API_URL,

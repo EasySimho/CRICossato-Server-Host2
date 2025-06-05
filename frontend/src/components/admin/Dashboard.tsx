@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { Newspaper, FolderOpen, BarChart2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const API_URL = process.env.BACKEND_URL + '/api';
+const API_URL = import.meta.env.PROD
+  ? `${process.env.URL_PUBBLICO}/api`
+  : '/api';
 
 interface BaseItem {
   _id: string;

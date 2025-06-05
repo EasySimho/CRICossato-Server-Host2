@@ -3,6 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, TextField, Typography, Paper, Container } from '@mui/material';
 import { useAuth } from '../../contexts/AuthContext';
 
+const API_URL = import.meta.env.PROD 
+  ? `${process.env.URL_PUBBLICO}/api`
+  : '/api';
+
 interface Stat {
   _id?: string;
   title: string;
@@ -30,7 +34,7 @@ const StatsForm: React.FC = () => {
 
   const fetchStat = async () => {
     try {
-      const response = await fetch(`${process.env.BACKEND_URL}/api/stats/${id}`, {
+      const response = await fetch(`${API_URL}/stats/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -51,8 +55,8 @@ const StatsForm: React.FC = () => {
 
     try {
       const url = id 
-        ? `http://localhost:3000/api/stats/${id}`
-        : 'http://localhost:3000/api/stats';
+        ? `${API_URL}/stats/${id}`
+        : `${API_URL}/stats`;
       
       const method = id ? 'PUT' : 'POST';
 

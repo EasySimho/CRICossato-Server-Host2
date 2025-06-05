@@ -25,11 +25,11 @@ const statSchema = new Schema({
     trim: true
   },
   image: {
-    type: String,
+    type: String, 
     trim: true
   }
 }, {
   timestamps: true
 });
 
-export default mongoose.model<IStat>('Stat', statSchema); 
+export default mongoose.model<IStat>('myStats', statSchema); 

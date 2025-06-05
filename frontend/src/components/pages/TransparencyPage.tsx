@@ -11,7 +11,7 @@ interface Document {
   createdAt: string;
 }
 
-const API_URL = "http://localhost:3000";
+const API_URL = `${process.env.URL_PUBBLICO}`;
 
 const Transparency = () => {
   const [documents, setDocuments] = useState<Document[]>([]);

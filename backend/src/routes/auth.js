@@ -9,7 +9,7 @@ const router = express.Router();
 const adminUser = {
   username: 'admin',
   // Default password: CriCossato
-  password: '$2b$10$mXQOVHFkr.Blm.LCa4CjhuLKeBbtGNcu/OaepZ6WfRRccKIZUyqpO'
+  password: await bcrypt.hash(process.env.ADMIN_PASSWORD, 10)
 };
 
 router.post('/login', [
