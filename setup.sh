@@ -77,6 +77,9 @@ echo "Installazione dipendenze backend..."
 cd $APP_DIR/backend
 npm install
 
+echo "Build backend..."
+npm run build
+
 echo "Installazione dipendenze frontend..."
 cd $APP_DIR/frontend
 npm install
@@ -84,10 +87,21 @@ npm install
 echo "Build frontend..."
 npm run build
 
+
+
 echo "Configurazione PM2 backend..."
+cd $APP_DIR/backend
 pm2 start npm --name "cricossato-backend" -- start
 pm2 save
-pm2 startup systemd -u $USER_NAME --hp /home/$USER_NAME
+
+# Creazione script di avvio
+cat > $APP_DIR/start.sh <<EOF
+#!/bin/bash
+cd $APP_DIR/backend
+pm2 start npm --name "cricossato-backend" -- start
+EOF
+
+chmod +x $APP_DIR/start.sh
 
 echo "Configurazione firewall..."
 sudo ufw allow 22

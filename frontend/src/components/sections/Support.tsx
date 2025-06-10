@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, Banknote, Gift, ArrowRight } from 'lucide-react';
+import { Heart, Banknote, Gift, ArrowRight, Sparkles, Star } from 'lucide-react';
 
 interface SupportOption {
   id: number;
@@ -10,29 +10,32 @@ interface SupportOption {
   buttonText: string;
   highlight?: boolean;
   amount?: string;
+  active: boolean;
   features?: string[];
 }
 
 const supportOptions: SupportOption[] = [
   {
     id: 1,
-    title: "Donazione",
-    description: "Trasforma la vita di chi ha bisogno con il tuo contributo. Ogni euro diventa speranza concreta.",
-    icon: <Heart className="w-10 h-10" />,
-    link: "#donate-once",
-    buttonText: "Dona Ora",
-    highlight: true,
-    amount: "da €10",
-    features: ["Impatto immediato", "100% trasparente", "Ricevuta fiscale"]
-  },
-  {
-    id: 2,
     title: "5x1000",
     description: "Zero costo per te, massimo valore per noi. Una firma che cambia tutto.",
     icon: <Banknote className="w-10 h-10" />,
-    link: "#5x1000",
+    link: "/5x1000",
     buttonText: "Scopri Come",
+    active: true,
     features: ["Nessun costo aggiuntivo", "Procedura semplice", "Impatto duraturo"]
+  },
+  {
+    id: 2,
+    title: "Donazione",
+    description: "Trasforma la vita di chi ha bisogno con il tuo contributo. Ogni euro diventa speranza concreta.",
+    icon: <Heart className="w-10 h-10" />,
+    link: "https://buy.stripe.com/3cIeVcfos2JNcCU8l5bbG01",
+    buttonText: "Dona Ora",
+    highlight: true,
+    amount: "da €10",
+    active: true,
+    features: ["Impatto immediato", "100% trasparente", "Ricevuta fiscale"]
   },
   {
     id: 3,
@@ -40,7 +43,8 @@ const supportOptions: SupportOption[] = [
     description: "Il regalo più bello? Quello che dona speranza a due persone contemporaneamente.",
     icon: <Gift className="w-10 h-10" />,
     link: "#gift",
-    buttonText: "Regala Ora",
+    buttonText: "Prossimamente",
+    active: false,
     features: ["Certificato personalizzato", "Messaggio dedicato", "Doppia felicità"]
   }
 ];
@@ -53,93 +57,184 @@ const stats = [
 
 const Support = () => {
   return (
-    <section id="support" className="py-12 sm:py-16 md:py-20 bg-gray-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="support" className="relative py-16 sm:py-20 md:py-24 bg-gray-50 overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-red-100 to-pink-100 rounded-full blur-3xl opacity-30"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-3xl opacity-30"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-full blur-3xl opacity-20"></div>
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-10 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-            Insieme per il Cambiamento
+        <div className="text-center mb-12 sm:mb-20">
+          
+          
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 bg-clip-text text-transparent mb-6 leading-tight">
+            Insieme per il
+            <span className="block text-red-600 bg-clip-text">
+              Cambiamento
+            </span>
           </h2>
-          <div className="flex justify-center mb-4 sm:mb-6">
-            <div className="h-1 w-8 sm:w-10 bg-gray-300 rounded"></div>
-            <div className="h-1 w-12 sm:w-16 bg-red-600 mx-2 rounded"></div>
-            <div className="h-1 w-8 sm:w-10 bg-gray-300 rounded"></div>
+          
+          <div className="flex justify-center items-center gap-3 mb-8">
           </div>
-          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
-            Non è solo una donazione, è l'inizio di una storia di speranza. 
-            Unisciti a noi per trasformare vite e costruire un futuro migliore.
+          
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
+            Non è solo una donazione, è l'inizio di una storia di speranza.
+            <br className="hidden sm:block" />
+            <span className="font-semibold text-gray-700">Unisciti a noi per trasformare vite e costruire un futuro migliore.</span>
           </p>
         </div>
 
-        {/* Stats */}
-        <div className="flex justify-center gap-6 sm:gap-12 mb-10 sm:mb-16">
+        {/* Enhanced Stats */}
+        <div className="flex justify-center gap-8 sm:gap-16 mb-16 sm:mb-24">
           {stats.map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-600 mb-1 sm:mb-2">{stat.number}</div>
-              <div className="text-gray-600 text-xs sm:text-sm uppercase tracking-wider">{stat.label}</div>
+            <div key={index} className="text-center group">
+              <div className="relative">
+                <div className="text-3xl sm:text-4xl md:text-5xl font-black bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">
+                  {stat.number}
+                </div>
+                <div className="absolute -inset-2 bg-gradient-to-r from-red-100 to-pink-100 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+              </div>
+              <div className="text-gray-600 text-sm sm:text-base font-semibold uppercase tracking-widest">
+                {stat.label}
+              </div>
             </div>
           ))}
         </div>
 
-        {/* Support Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-16">
+        {/* Enhanced Support Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
           {supportOptions.map((option) => (
             <div
               key={option.id}
-              className={`group relative overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-xl ${
-                option.highlight 
-                  ? 'bg-white border-2 border-red-500' 
-                  : 'bg-white border border-gray-200'
+              className={`group relative overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2 ${
+                option.highlight
+                  ? 'bg-gradient-to-br from-white via-red-50 to-pink-50 border-2 border-red-200 shadow-2xl shadow-red-100 hover:shadow-3xl hover:shadow-red-200'
+                  : option.active 
+                    ? 'bg-white border border-gray-200 shadow-lg hover:shadow-2xl hover:border-gray-300'
+                    : 'bg-gray-50 border border-gray-200 opacity-75 hover:opacity-90'
               }`}
             >
+              {/* Animated background gradient */}
               {option.highlight && (
-                <div className="absolute top-3 sm:top-4 right-3 sm:right-4 px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500 text-white text-xs font-semibold rounded-full">
-                  Più Popolare
+                <div className="absolute inset-0 bg-gradient-to-br from-red-400 via-pink-400 to-purple-400 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
+              )}
+
+              {/* Badges */}
+              {option.highlight && (
+                <div className="absolute top-4 right-4 z-10">
+                  <div className="flex items-center gap-1 px-3 py-1.5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold rounded-full shadow-lg animate-pulse">
+                    <Star className="w-3 h-3 fill-current" />
+                    Più Popolare
+                  </div>
                 </div>
               )}
 
-              <div className="p-5 sm:p-8">
-                <div className={`inline-flex p-3 sm:p-4 rounded-xl mb-4 sm:mb-6 ${
-                  option.highlight ? 'bg-red-100' : 'bg-gray-100'
-                }`}>
-                  <div className="text-red-600">
-                    {React.cloneElement(option.icon as React.ReactElement, {
-                      className: "w-8 h-8 sm:w-10 sm:h-10"
-                    })}
+              {!option.active && (
+                <div className="absolute top-4 right-4 z-10">
+                  <div className="px-3 py-1.5 bg-gray-400 text-white text-xs font-semibold rounded-full">
+                    Prossimamente
                   </div>
                 </div>
+              )}
 
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">{option.title}</h3>
-                
+              <div className="relative p-6 sm:p-8 h-full flex flex-col">
+                {/* Icon */}
+                <div className={`mb-6 ${
+                  option.highlight 
+                    ? 'text-red-600' 
+                    : option.active 
+                      ? 'text-gray-700 group-hover:text-red-600' 
+                      : 'text-gray-400'
+                } transition-colors duration-300`}>
+                  {option.icon}
+                </div>
+
+                {/* Title */}
+                <h3 className={`text-2xl sm:text-3xl font-bold mb-3 ${
+                  option.highlight 
+                    ? 'text-gray-900' 
+                    : option.active 
+                      ? 'text-gray-900' 
+                      : 'text-gray-500'
+                }`}>
+                  {option.title}
+                </h3>
+
+                {/* Amount */}
                 {option.amount && (
-                  <div className="text-red-600 font-semibold mb-3 sm:mb-4">{option.amount}</div>
+                  <div className="inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-sm font-bold rounded-full mb-4 self-start">
+                    {option.amount}
+                  </div>
                 )}
 
-                <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed">{option.description}</p>
+                {/* Description */}
+                <p className={`text-base leading-relaxed mb-6 flex-grow ${
+                  option.active ? 'text-gray-600' : 'text-gray-500'
+                }`}>
+                  {option.description}
+                </p>
 
+                {/* Features */}
                 {option.features && (
-                  <ul className="space-y-1.5 sm:space-y-2 mb-6 sm:mb-8">
+                  <ul className="space-y-3 mb-8">
                     {option.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center text-xs sm:text-sm text-gray-600">
-                        <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-red-600 mr-2 flex-shrink-0" />
-                        {feature}
+                      <li key={idx} className="flex items-center text-sm">
+                        <div className={`w-5 h-5 rounded-full flex items-center justify-center mr-3 ${
+                          option.highlight 
+                            ? 'bg-gradient-to-r from-red-500 to-pink-500' 
+                            : option.active 
+                              ? 'bg-gray-200 group-hover:bg-red-100' 
+                              : 'bg-gray-100'
+                        } transition-colors duration-300`}>
+                          <ArrowRight className={`w-3 h-3 ${
+                            option.highlight 
+                              ? 'text-white' 
+                              : option.active 
+                                ? 'text-gray-600 group-hover:text-red-600' 
+                                : 'text-gray-400'
+                          } transition-colors duration-300`} />
+                        </div>
+                        <span className={option.active ? 'text-gray-700' : 'text-gray-500'}>
+                          {feature}
+                        </span>
                       </li>
                     ))}
                   </ul>
                 )}
 
-                <button className={`w-full py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${
-                  option.highlight 
-                    ? 'bg-red-600 hover:bg-red-700 text-white' 
-                    : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
-                }`}>
-                  {option.buttonText}
-                  <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-1" />
-                </button>
+                {/* Button */}
+                {option.active && (
+                  <a
+                    href={option.link}
+                    className={`group/btn relative overflow-hidden py-4 px-6 rounded-2xl font-bold text-base transition-all duration-300 flex items-center justify-center gap-3 ${
+                      option.highlight
+                        ? 'bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white shadow-lg shadow-red-200 hover:shadow-xl hover:shadow-red-300'
+                        : 'bg-gray-900 hover:bg-black text-white shadow-lg hover:shadow-xl'
+                    } transform hover:scale-105 active:scale-95`}
+                  >
+                    <span className="relative z-10">
+                      {option.buttonText}
+                    </span>
+                    <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover/btn:translate-x-1" />
+                    
+                    {/* Button shine effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover/btn:opacity-20 transition-opacity duration-500 transform -skew-x-12 group-hover/btn:animate-pulse"></div>
+                  </a>
+                )}
+
+                {!option.active && (
+                  <div className="py-4 px-6 rounded-2xl font-bold text-base bg-gray-200 text-gray-500 text-center cursor-not-allowed">
+                    {option.buttonText}
+                  </div>
+                )}
               </div>
             </div>
           ))}
         </div>
+        
       </div>
     </section>
   );

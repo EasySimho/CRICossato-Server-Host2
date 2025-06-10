@@ -30,7 +30,7 @@ const Footer = () => {
               </div>
               <div className="flex justify-center space-x-4 mt-6">
                 <a
-                  href="https://facebook.com"
+                  href="https://www.facebook.com/cricossato"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 bg-slate-800 rounded-lg hover:bg-blue-600 transition-all duration-200 transform hover:scale-110 hover:-translate-y-0.5"
@@ -38,7 +38,7 @@ const Footer = () => {
                   <Facebook size={20} />
                 </a>
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/crocerossacossato"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 bg-slate-800 rounded-lg hover:bg-pink-600 transition-all duration-200 transform hover:scale-110 hover:-translate-y-0.5"
@@ -55,18 +55,18 @@ const Footer = () => {
                 <div className="flex items-center text-gray-300">
                   <Phone size={18} className="mr-3 text-gray-400" />
                   <a href="tel:+390000000000" className="hover:text-white transition-all duration-200 hover:translate-x-1">
-                    +39 000 000 0000
+                    +39 015 984 0050
                   </a>
                 </div>
                 <div className="flex items-center text-gray-300">
                   <Mail size={18} className="mr-3 text-gray-400" />
                   <a href="mailto:info@cricossato.it" className="hover:text-white transition-all duration-200 hover:translate-x-1">
-                    info@cricossato.it
+                    cossato@cri.it
                   </a>
                 </div>
                 <div className="flex items-center text-gray-300">
                   <MapPin size={18} className="mr-3 text-gray-400" />
-                  <span>Via Example, 123 - Cossato</span>
+                  <span>Via Giovanni Amendola, 91</span>
                 </div>
               </div>
             </div>

@@ -83,21 +83,34 @@ const Navbar = () => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <ScrollLink
-
-              to={'home'}
-              spy={true}
-              smooth={true}
-              offset={-80}
-              duration={500}
-              className="cursor-pointer"
-            >
-              <img
-                src="/LogoCri.svg"
-                alt="Croce Rossa Italiana"
-                className={`h-16 w-auto transition-all duration-300 ${isScrolled ? 'scale-90' : 'scale-100'}`}
-              />
-            </ScrollLink>
+            {location.pathname === '/' ? (
+              <ScrollLink
+                to="home"
+                spy={true}
+                smooth={true}
+                offset={-80}
+                duration={500}
+                className="cursor-pointer"
+              >
+                <img
+                  src="/LogoCri.svg"
+                  alt="Croce Rossa Italiana"
+                  className={`h-16 w-auto transition-all duration-300 ${isScrolled ? 'scale-90' : 'scale-100'}`}
+                />
+              </ScrollLink>
+            ) : (
+              <Link
+                to="/"
+                className="cursor-pointer"
+                
+              >
+                <img
+                  src="/LogoCri.svg"
+                  alt="Croce Rossa Italiana"
+                  className={`h-16 w-auto transition-all duration-300 ${isScrolled ? 'scale-90' : 'scale-100'}`}
+                />
+              </Link>
+            )}
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">

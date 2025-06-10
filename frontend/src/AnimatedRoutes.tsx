@@ -14,6 +14,7 @@ import Projects from "./components/sections/Projects";
 import News from "./components/sections/News";
 import Transparency from "./components/pages/TransparencyPage";
 import ProjectDetail from "./components/sections/ProjectDetail";
+import CinquexMille from "./components/pages/5x1000"
 // ...altri import
 
 const pageTransition = {
@@ -97,6 +98,16 @@ function AnimatedRoutes() {
                 </motion.div>
               }
             />
+            <Route
+              path="/5x1000"
+              element={
+                <motion.div {...pageTransition}>
+                  <CinquexMille />
+                </motion.div>
+              }
+            />
+            
+
 
             {/* ...altre pagine */}
             <Route

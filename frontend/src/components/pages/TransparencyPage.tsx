@@ -11,7 +11,6 @@ interface Document {
   createdAt: string;
 }
 
-const API_URL = `${process.env.URL_PUBBLICO}`;
 
 const Transparency = () => {
   const [documents, setDocuments] = useState<Document[]>([]);
@@ -27,7 +26,7 @@ const Transparency = () => {
 
   const fetchDocuments = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/documents`);
+      const response = await fetch(`/api/documents`);
       if (!response.ok) {
         throw new Error("Failed to fetch documents");
       }
