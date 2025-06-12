@@ -3,7 +3,7 @@ import { Newspaper, FolderOpen, BarChart2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const API_URL = import.meta.env.PROD
-  ? `${process.env.URL_PUBBLICO}/api`
+  ? `${import.meta.env.VITE_URL_PUBBLICO}/api`
   : '/api';
 
 interface BaseItem {

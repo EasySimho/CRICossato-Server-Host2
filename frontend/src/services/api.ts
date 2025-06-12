@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_URL = import.meta.env.PROD 
-  ? `${process.env.URL_PUBBLICO}/api`
+  ? `${import.meta.env.VITE_URL_PUBBLICO}/api`
   : 'http://localhost:3000/api';
 
 const api = axios.create({

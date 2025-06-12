@@ -4,7 +4,7 @@ import { Box, Button, TextField, Typography, Paper, Container } from '@mui/mater
 import { useAuth } from '../../contexts/AuthContext';
 
 const API_URL = import.meta.env.PROD 
-  ? `${process.env.URL_PUBBLICO}/api`
+  ? `${import.meta.env.VITE_URL_PUBBLICO}/api`
   : '/api';
 
 interface Stat {
