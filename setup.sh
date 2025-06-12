@@ -11,6 +11,8 @@ PORT=${PORT:-3000}
 read -p "Inserisci la secret key JWT (es. stringa lunga casuale): " JWT_SECRET
 read -p "Inserisci password admin (default 'Admin'): " ADMIN_PASSWORD
 ADMIN_PASSWORD=${ADMIN_PASSWORD:-Admin}
+read -p "Vuoi configurare HTTPS? (s/n): " USE_HTTPS
+read -p "Inserisci il dominio per il certificato SSL (es. cricossato.it): " DOMAIN
 
 USER_NAME=$(whoami)
 APP_DIR="/var/www/cricossato"
@@ -21,7 +23,7 @@ echo "Aggiornamento sistema..."
 sudo apt update && sudo apt upgrade -y
 
 echo "Installazione dipendenze base..."
-sudo apt install -y git curl nginx ufw
+sudo apt install -y git curl nginx ufw certbot python3-certbot-nginx
 
 echo "Installazione Node.js 18.x e npm..."
 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
@@ -57,8 +59,8 @@ rm -rf $APP_DIR/CRICossato-Server-Host2
 cat > $APP_DIR/backend/.env <<EOF
 PORT=$PORT
 MONGODB_URI=mongodb://127.0.0.1:27017/cri-db
-FRONTEND_URL=http://$IP_PUBBLICO
-BASE_URL=http://$IP_PUBBLICO
+FRONTEND_URL=http${USE_HTTPS,,}://$IP_PUBBLICO
+BASE_URL=http${USE_HTTPS,,}://$IP_PUBBLICO
 JWT_SECRET=$JWT_SECRET
 ADMIN_PASSWORD=$ADMIN_PASSWORD
 EOF
@@ -67,8 +69,8 @@ echo "File backend/.env creato."
 
 # Creazione frontend .env
 cat > $APP_DIR/frontend/.env <<EOF
-BACKEND_URL=
-URL_PUBBLICO=http://$IP_PUBBLICO
+VITE_BACKEND_URL=
+VITE_URL_PUBBLICO=http${USE_HTTPS,,}://$IP_PUBBLICO
 EOF
 
 echo "File frontend/.env creato."
@@ -87,8 +89,6 @@ npm install
 echo "Build frontend..."
 npm run build
 
-
-
 echo "Configurazione PM2 backend..."
 cd $APP_DIR/backend
 pm2 start npm --name "cricossato-backend" -- start
@@ -106,11 +106,53 @@ chmod +x $APP_DIR/start.sh
 echo "Configurazione firewall..."
 sudo ufw allow 22
 sudo ufw allow 80
+sudo ufw allow 443
 sudo ufw --force enable
 
 echo "Configurazione Nginx..."
 
-sudo bash -c "cat > $NGINX_CONF_PATH" <<EOF
+if [ "${USE_HTTPS,,}" = "s" ]; then
+  sudo bash -c "cat > $NGINX_CONF_PATH" <<EOF
+server {
+    listen 80;
+    server_name $DOMAIN;
+    return 301 https://\$server_name\$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name $DOMAIN;
+
+    ssl_certificate /etc/letsencrypt/live/$DOMAIN/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/$DOMAIN/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    # Frontend
+    location / {
+        root $APP_DIR/frontend/dist;
+        try_files \$uri \$uri/ /index.html;
+        index index.html;
+    }
+
+    # Backend API
+    location /api {
+        proxy_pass http://localhost:$PORT;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_cache_bypass \$http_upgrade;
+    }
+
+    # Configurazione per file statici
+    location /uploads {
+        alias $APP_DIR/backend/uploads;
+    }
+}
+EOF
+else
+  sudo bash -c "cat > $NGINX_CONF_PATH" <<EOF
 server {
     listen 80;
     server_name _;
@@ -138,6 +180,7 @@ server {
     }
 }
 EOF
+fi
 
 echo "Rimozione configurazione Nginx di default..."
 sudo rm -f /etc/nginx/sites-enabled/default
@@ -151,6 +194,15 @@ sudo nginx -t
 echo "Riavvio Nginx..."
 sudo systemctl restart nginx
 
+if [ "${USE_HTTPS,,}" = "s" ]; then
+  echo "Configurazione certificato SSL..."
+  sudo certbot --nginx -d $DOMAIN --non-interactive --agree-tos --email admin@$DOMAIN
+fi
+
 echo
 echo "=== SETUP COMPLETATO ==="
-echo "Applicazione disponibile all'indirizzo: http://$IP_PUBBLICO"
+if [ "${USE_HTTPS,,}" = "s" ]; then
+  echo "Applicazione disponibile all'indirizzo: https://$DOMAIN"
+else
+  echo "Applicazione disponibile all'indirizzo: http://$IP_PUBBLICO"
+fi

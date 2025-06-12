@@ -1,0 +1,5 @@
+db.createCollection("projects");
+db.createCollection("stats");
+db.createCollection("news");
+db.createCollection("documents");
+db.createCollection("contacts");
