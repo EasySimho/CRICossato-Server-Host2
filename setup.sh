@@ -14,6 +14,13 @@ ADMIN_PASSWORD=${ADMIN_PASSWORD:-Admin}
 read -p "Vuoi configurare HTTPS? (s/n): " USE_HTTPS
 read -p "Inserisci il dominio per il certificato SSL (es. cricossato.it): " DOMAIN
 
+# Converti la risposta HTTPS in un prefisso URL appropriato
+if [ "${USE_HTTPS,,}" = "s" ]; then
+    URL_PREFIX="https"
+else
+    URL_PREFIX="http"
+fi
+
 USER_NAME=$(whoami)
 APP_DIR="/var/www/cricossato"
 REPO_URL="https://github.com/EasySimho/CRICossato-Server-Host2"
@@ -59,8 +66,8 @@ rm -rf $APP_DIR/CRICossato-Server-Host2
 cat > $APP_DIR/backend/.env <<EOF
 PORT=$PORT
 MONGODB_URI=mongodb://127.0.0.1:27017/cri-db
-FRONTEND_URL=http${USE_HTTPS,,}://$IP_PUBBLICO
-BASE_URL=http${USE_HTTPS,,}://$IP_PUBBLICO
+FRONTEND_URL=$URL_PREFIX://$IP_PUBBLICO
+BASE_URL=$URL_PREFIX://$IP_PUBBLICO
 JWT_SECRET=$JWT_SECRET
 ADMIN_PASSWORD=$ADMIN_PASSWORD
 EOF
@@ -70,7 +77,7 @@ echo "File backend/.env creato."
 # Creazione frontend .env
 cat > $APP_DIR/frontend/.env <<EOF
 VITE_BACKEND_URL=
-VITE_URL_PUBBLICO=http${USE_HTTPS,,}://$IP_PUBBLICO
+VITE_URL_PUBBLICO=$URL_PREFIX://$IP_PUBBLICO
 EOF
 
 echo "File frontend/.env creato."
