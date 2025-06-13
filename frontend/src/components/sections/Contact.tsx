@@ -85,7 +85,7 @@ const Contact = () => {
                 <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4 sm:mb-6">CHATTA CON NOI</h3>
                 <p className="text-sm sm:text-base text-gray-600 mb-2">Il nostro team è qui per aiutarti.</p>
                 <a href="mailto:info@crocerossa.it" className="text-red-600 hover:text-red-700 transition-colors">
-                  info@crocerossa.it
+                  cossato@cri.it
                 </a>
               </div>
 
@@ -97,8 +97,8 @@ const Contact = () => {
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">Telefono</h4>
                     <p className="text-xs sm:text-sm text-gray-600">
-                      +39 06 1234567<br />
-                      +39 333 1234567
+                      +39 015 922697<br />
+                      +39 334 6456537
                     </p>
                   </div>
                 </div>
@@ -110,8 +110,8 @@ const Contact = () => {
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">Indirizzo</h4>
                     <p className="text-xs sm:text-sm text-gray-600">
-                      Via Roma 123<br />
-                      00100 Roma (RM)
+                      Via Amendola, 91<br />
+                      13836 COSSATO (BI)
                     </p>
                   </div>
                 </div>
@@ -123,8 +123,8 @@ const Contact = () => {
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">Email</h4>
                     <p className="text-xs sm:text-sm text-gray-600">
-                      info@crocerossa.it<br />
-                      corsi@crocerossa.it
+                      cossato@cri.it<br />
+                      pec: cl.cossato@cert.cri.it
                     </p>
                   </div>
                 </div>
@@ -235,7 +235,7 @@ const Contact = () => {
                     required
                   />
                   <label htmlFor="privacy" className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                    Accetto l'<a href="#" className="text-red-600 hover:text-red-700 underline">informativa sulla privacy</a> e autorizzo il trattamento dei miei dati personali secondo quanto previsto dal GDPR.
+                    Accetto l'<a href="/privacy" className="text-red-600 hover:text-red-700 underline">informativa sulla privacy</a> e autorizzo il trattamento dei miei dati personali secondo quanto previsto dal GDPR.
                   </label>
                 </div>
 

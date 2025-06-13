@@ -17,6 +17,8 @@ import ProjectDetail from "./components/sections/ProjectDetail";
 import CinquexMille from "./components/pages/5x1000";
 import ChiSiamo from "./components/sections/ChiSiamo";
 import StoriaCroceRossa from "./components/pages/StoriaCroceRossa";
+import PrivacyPolicy from "./components/pages/Gdpr"
+
 // ...altri import
 
 const pageTransition = {
@@ -116,6 +118,15 @@ function AnimatedRoutes() {
               element={
                 <motion.div {...pageTransition}>
                   <CinquexMille />
+                </motion.div>
+              }
+            />
+
+            <Route
+              path="/privacy"
+              element={
+                <motion.div {...pageTransition}>
+                  <PrivacyPolicy />
                 </motion.div>
               }
             />
