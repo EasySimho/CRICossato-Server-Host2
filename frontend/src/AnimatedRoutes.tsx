@@ -14,7 +14,9 @@ import Projects from "./components/sections/Projects";
 import News from "./components/sections/News";
 import Transparency from "./components/pages/TransparencyPage";
 import ProjectDetail from "./components/sections/ProjectDetail";
-import CinquexMille from "./components/pages/5x1000"
+import CinquexMille from "./components/pages/5x1000";
+import ChiSiamo from "./components/sections/ChiSiamo";
+import StoriaCroceRossa from "./components/pages/StoriaCroceRossa";
 // ...altri import
 
 const pageTransition = {
@@ -42,8 +44,11 @@ function AnimatedRoutes() {
                   <section id="home">
                     <Hero />
                   </section>
+                  <section id="stats">
+                    <Stats/>
+                  </section>
                   <section id="chi-siamo">
-                    <Stats />
+                    <ChiSiamo />
                   </section>
                   <section id="corsi">
                     <Projects />
@@ -63,6 +68,14 @@ function AnimatedRoutes() {
                   <section id="contatti">
                     <Contact />
                   </section>
+                </motion.div>
+              }
+            />
+            <Route
+              path="/storia"
+              element={
+                <motion.div {...pageTransition}>
+                  <StoriaCroceRossa />
                 </motion.div>
               }
             />
