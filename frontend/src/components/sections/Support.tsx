@@ -82,23 +82,7 @@ const Support = () => {
             <span className="font-semibold text-gray-700">Unisciti a noi per trasformare vite e costruire un futuro migliore.</span>
           </p>
         </div>
-
-        {/* Enhanced Stats */}
-        <div className="flex justify-center gap-8 sm:gap-16 mb-16 sm:mb-24">
-          {stats.map((stat, index) => (
-            <div key={index} className="text-center group">
-              <div className="relative">
-                <div className="text-3xl sm:text-4xl md:text-5xl font-black bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">
-                  {stat.number}
-                </div>
-                <div className="absolute -inset-2 bg-gradient-to-r from-red-100 to-pink-100 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-              </div>
-              <div className="text-gray-600 text-sm sm:text-base font-semibold uppercase tracking-widest">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
+        
 
         {/* Enhanced Support Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
