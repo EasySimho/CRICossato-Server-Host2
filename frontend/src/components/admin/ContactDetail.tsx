@@ -13,7 +13,7 @@ interface Contact {
 }
 
 const API_URL = import.meta.env.PROD
-  ? `${process.env.URL_PUBBLICO}/api`
+  ? `${import.meta.env.VITE_URL_PUBBLICO}/api`
   : '/api';
 
 
@@ -30,18 +30,31 @@ export default function ContactDetail() {
 
   const fetchContact = async () => {
     try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
       const response = await fetch(`${API_URL}/contacts/${id}`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${token}`
         }
       });
+      
       if (!response.ok) {
-        throw new Error('Failed to fetch contact');
+        const errorData = await response.json().catch(() => null);
+        console.error('Server response:', errorData);
+        throw new Error(`Failed to fetch contact: ${response.status} ${response.statusText}`);
       }
+      
       const data = await response.json();
       setContact(data);
     } catch (error) {
       console.error('Error fetching contact:', error);
+      if (error instanceof Error && error.message.includes('No authentication token')) {
+        // Redirect to login if no token is found
+        window.location.href = '/admin/login';
+      }
     } finally {
       setLoading(false);
     }
