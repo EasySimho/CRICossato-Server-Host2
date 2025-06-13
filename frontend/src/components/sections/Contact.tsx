@@ -12,7 +12,7 @@ const Contact = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
 
-  const handleSubmit = (e: FormEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setStatus('loading');
     setErrorMessage('');
@@ -23,12 +23,27 @@ const Contact = () => {
       return;
     }
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const response = await fetch('/api/contacts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (!response.ok) {
+        throw new Error('Errore nell\'invio del messaggio');
+      }
+
       setStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
       setPrivacyAccepted(false);
-    }, 1000);
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      setStatus('error');
+      setErrorMessage('Si è verificato un errore nell\'invio del messaggio. Riprova più tardi.');
+    }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
