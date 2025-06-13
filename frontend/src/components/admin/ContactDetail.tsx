@@ -40,13 +40,13 @@ export default function ContactDetail() {
           'Authorization': `Bearer ${token}`
         }
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => null);
         console.error('Server response:', errorData);
         throw new Error(`Failed to fetch contact: ${response.status} ${response.statusText}`);
       }
-      
+
       const data = await response.json();
       setContact(data);
     } catch (error) {
@@ -115,33 +115,7 @@ export default function ContactDetail() {
     }
   };
 
-  const handleReply = async () => {
-    if (!replyMessage.trim()) {
-      alert('Per favore, inserisci un messaggio di risposta');
-      return;
-    }
 
-    try {
-      const response = await fetch(`${API_URL}/contacts/${id}/reply`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify({ message: replyMessage })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to send reply');
-      }
-
-      setContact(prev => prev ? { ...prev, status: 'replied' } : null);
-      setReplyMessage('');
-      alert('Risposta inviata con successo');
-    } catch (error) {
-      console.error('Error sending reply:', error);
-    }
-  };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('it-IT', {
@@ -228,42 +202,23 @@ export default function ContactDetail() {
               <div className="mt-2 flex space-x-4">
                 <button
                   onClick={() => handleStatusChange('read')}
-                  className={`px-4 py-2 rounded-md ${
-                    contact.status === 'read'
-                      ? 'bg-blue-100 text-blue-800'
-                      : 'bg-gray-100 text-gray-800 hover:bg-blue-100 hover:text-blue-800'
-                  }`}
+                  className={`px-4 py-2 rounded-md ${contact.status === 'read'
+                    ? 'bg-blue-100 text-blue-800'
+                    : 'bg-gray-100 text-gray-800 hover:bg-blue-100 hover:text-blue-800'
+                    }`}
                 >
                   Segna come letto
                 </button>
                 <button
                   onClick={() => handleStatusChange('replied')}
-                  className={`px-4 py-2 rounded-md ${
-                    contact.status === 'replied'
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-gray-100 text-gray-800 hover:bg-green-100 hover:text-green-800'
-                  }`}
+                  className={`px-4 py-2 rounded-md ${contact.status === 'replied'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-gray-100 text-gray-800 hover:bg-green-100 hover:text-green-800'
+                    }`}
                 >
                   Segna come risposto
                 </button>
               </div>
-            </div>
-
-            <div className="mt-6">
-              <h3 className="text-sm font-medium text-gray-500">Rispondi</h3>
-              <textarea
-                value={replyMessage}
-                onChange={(e) => setReplyMessage(e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                rows={4}
-                placeholder="Scrivi la tua risposta..."
-              />
-              <button
-                onClick={handleReply}
-                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-              >
-                Invia risposta
-              </button>
             </div>
           </div>
         </div>

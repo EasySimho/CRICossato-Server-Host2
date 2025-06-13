@@ -1,4 +1,5 @@
 import express from 'express';
+import nodemailer from 'nodemailer';
 import {
   submitContact,
   getContacts,
@@ -18,5 +19,8 @@ router.get('/', authMiddleware, getContacts);
 router.get('/:id', authMiddleware, getContactById);
 router.put('/:id', authMiddleware, updateContact);
 router.delete('/:id', authMiddleware, deleteContact);
+
+
+
 
 export default router; 
