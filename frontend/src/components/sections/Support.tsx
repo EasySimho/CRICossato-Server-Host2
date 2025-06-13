@@ -5,7 +5,6 @@ interface SupportOption {
   id: number;
   title: string;
   description: string;
-  icon: React.ReactNode;
   link: string;
   buttonText: string;
   highlight?: boolean;
@@ -19,7 +18,6 @@ const supportOptions: SupportOption[] = [
     id: 1,
     title: "5x1000",
     description: "Zero costo per te, massimo valore per noi. Una firma che cambia tutto.",
-    icon: <Banknote className="w-10 h-10" />,
     link: "/5x1000",
     buttonText: "Scopri Come",
     active: true,
@@ -29,7 +27,6 @@ const supportOptions: SupportOption[] = [
     id: 2,
     title: "Donazione",
     description: "Trasforma la vita di chi ha bisogno con il tuo contributo. Ogni euro diventa speranza concreta.",
-    icon: <Heart className="w-10 h-10" />,
     link: "https://buy.stripe.com/3cIeVcfos2JNcCU8l5bbG01",
     buttonText: "Dona Ora",
     highlight: true,
@@ -41,7 +38,6 @@ const supportOptions: SupportOption[] = [
     id: 3,
     title: "Regalo Solidale",
     description: "Il regalo più bello? Quello che dona speranza a due persone contemporaneamente.",
-    icon: <Gift className="w-10 h-10" />,
     link: "#gift",
     buttonText: "Prossimamente",
     active: false,
@@ -142,15 +138,7 @@ const Support = () => {
 
               <div className="relative p-6 sm:p-8 h-full flex flex-col">
                 {/* Icon */}
-                <div className={`mb-6 ${
-                  option.highlight 
-                    ? 'text-red-600' 
-                    : option.active 
-                      ? 'text-gray-700 group-hover:text-red-600' 
-                      : 'text-gray-400'
-                } transition-colors duration-300`}>
-                  {option.icon}
-                </div>
+                
 
                 {/* Title */}
                 <h3 className={`text-2xl sm:text-3xl font-bold mb-3 ${
