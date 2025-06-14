@@ -17,7 +17,8 @@ import ProjectDetail from "./components/sections/ProjectDetail";
 import CinquexMille from "./components/pages/5x1000";
 import ChiSiamo from "./components/sections/ChiSiamo";
 import StoriaCroceRossa from "./components/pages/StoriaCroceRossa";
-import PrivacyPolicy from "./components/pages/Gdpr"
+import PrivacyPolicy from "./components/pages/Gdpr";
+import NotFound from "./pages/NotFound";
 
 // ...altri import
 
@@ -138,7 +139,7 @@ function AnimatedRoutes() {
               path="*"
               element={
                 <motion.div {...pageTransition}>
-                  <div>Pagina non trovata</div>
+                  <NotFound />
                 </motion.div>
               }
             />
