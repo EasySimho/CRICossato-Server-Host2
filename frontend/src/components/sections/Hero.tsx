@@ -72,7 +72,23 @@ const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(true);
   const slideIntervalRef = useRef<number | null>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  // Add scroll handler
+  useEffect(() => {
+    const handleScroll = () => {
+      if (heroRef.current) {
+        const scrollPosition = window.scrollY;
+        const heroHeight = heroRef.current.offsetHeight;
+        setIsFullScreen(scrollPosition < heroHeight * 0.1);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Swipe/drag handling
   const startX = useRef(0);
@@ -206,8 +222,11 @@ const Hero = () => {
   return (
     <div id="home">
       <div
-        className={`relative h-[70vh] md:h-[80vh] overflow-hidden bg-gray-900 ${
+        ref={heroRef}
+        className={`relative overflow-hidden bg-gray-900 transition-all duration-500 ${
           isDragging ? "cursor-grabbing" : "cursor-grab"
+        } ${
+          isFullScreen ? "h-screen" : "h-[70vh] md:h-[80vh]"
         }`}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -300,9 +319,13 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Navigation buttons */}
-      <div className="flex justify-center -mt-6 sm:-mt-8 mb-6 sm:mb-8 z-30 relative">
-        <div className="flex items-center space-x-2 sm:space-x-4">
+      {/* Navigation buttons - Modified positioning and sizing */}
+      <div className={`flex justify-center z-30 relative transition-all duration-500 ${
+        isFullScreen ? "mt-[-20vh]" : "-mt-6 sm:-mt-8"
+      } mb-6 sm:mb-8`}>
+        <div className={`flex items-center transition-all duration-500 ${
+          isFullScreen ? "space-x-3 sm:space-x-6 md:space-x-8" : "space-x-2 sm:space-x-4"
+        }`}>
           {slides.map((slide, index) => (
             <button
               key={index}
@@ -316,9 +339,13 @@ const Hero = () => {
               }`}
               aria-label={`Vai alla slide ${index + 1}: ${slide.title}`}
             >
-              {/* Circular preview image */}
+              {/* Circular preview image - Modified sizing with better mobile responsiveness */}
               <div
-                className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-cover bg-center border-2 sm:border-3 transition-all duration-300 ${
+                className={`rounded-full bg-cover bg-center border-2 sm:border-3 transition-all duration-300 ${
+                  isFullScreen 
+                    ? "w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24" 
+                    : "w-16 h-16 sm:w-20 sm:h-20"
+                } ${
                   index === currentSlide
                     ? "hover:outline outline-red-600"
                     : "filter grayscale border-white/50 hover:border-white/80 hover:grayscale-0"
@@ -327,8 +354,12 @@ const Hero = () => {
                   backgroundImage: `url(${slide.image})`,
                 }}
               />
-              {/* Hover tooltip */}
-              <div className="absolute -top-10 sm:-top-12 left-1/2 -translate-x-1/2 px-2 sm:px-3 py-1 bg-black/80 text-white text-xs sm:text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
+              {/* Hover tooltip - Adjusted position for different sizes */}
+              <div className={`absolute left-1/2 -translate-x-1/2 px-2 sm:px-3 py-1 bg-black/80 text-white text-xs sm:text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none ${
+                isFullScreen 
+                  ? "-top-8 sm:-top-12 md:-top-14" 
+                  : "-top-10 sm:-top-12"
+              }`}>
                 {slide.title}
               </div>
             </button>

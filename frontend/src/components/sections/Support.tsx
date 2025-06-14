@@ -63,20 +63,19 @@ const Support = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-12 sm:mb-20">
-          
-          
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 bg-clip-text text-transparent mb-6 leading-tight">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 leading-tight">
             Insieme per il
-            <span className="block text-red-600 bg-clip-text">
+            <span className="text-red-600 block">
               Cambiamento
             </span>
-          </h2>
-          
-          <div className="flex justify-center items-center gap-3 mb-8">
+          </h1>
+          <div className="flex justify-center mb-8">
+            <div className="h-1 w-12 bg-gray-300 rounded"></div>
+            <div className="h-1 w-20 bg-red-600 mx-3 rounded"></div>
+            <div className="h-1 w-12 bg-gray-300 rounded"></div>
           </div>
-          
-          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Non è solo una donazione, è l'inizio di una storia di speranza.
             <br className="hidden sm:block" />
             <span className="font-semibold text-gray-700">Unisciti a noi per trasformare vite e costruire un futuro migliore.</span>
@@ -91,23 +90,23 @@ const Support = () => {
               key={option.id}
               className={`group relative overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2 ${
                 option.highlight
-                  ? 'bg-gradient-to-br from-white via-red-50 to-pink-50 border-2 border-red-200 shadow-2xl shadow-red-100 hover:shadow-3xl hover:shadow-red-200'
+                  ? 'bg-red-50 border-2 border-red-200 shadow-2xl shadow-red-100 hover:shadow-3xl hover:shadow-red-200'
                   : option.active 
                     ? 'bg-white border border-gray-200 shadow-lg hover:shadow-2xl hover:border-gray-300'
                     : 'bg-gray-50 border border-gray-200 opacity-75 hover:opacity-90'
               }`}
             >
-              {/* Animated background gradient */}
+              {/* Animated background */}
               {option.highlight && (
-                <div className="absolute inset-0 bg-gradient-to-br from-red-400 via-pink-400 to-purple-400 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-red-500 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
               )}
 
               {/* Badges */}
               {option.highlight && (
                 <div className="absolute top-4 right-4 z-10">
-                  <div className="flex items-center gap-1 px-3 py-1.5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold rounded-full shadow-lg animate-pulse">
-                    <Star className="w-3 h-3 fill-current" />
-                    Più Popolare
+                  <div className="flex items-center gap-1 px-3 py-1.5 bg-red-600 text-white text-xs font-semibold rounded-full shadow-lg">
+                    <Heart className="w-3 h-3 fill-current" />
+                    Impatto Immediato
                   </div>
                 </div>
               )}
@@ -137,7 +136,7 @@ const Support = () => {
 
                 {/* Amount */}
                 {option.amount && (
-                  <div className="inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-sm font-bold rounded-full mb-4 self-start">
+                  <div className="inline-flex items-center gap-1 px-3 py-1 bg-red-500 text-white text-sm font-bold rounded-full mb-4 self-start">
                     {option.amount}
                   </div>
                 )}
@@ -156,7 +155,7 @@ const Support = () => {
                       <li key={idx} className="flex items-center text-sm">
                         <div className={`w-5 h-5 rounded-full flex items-center justify-center mr-3 ${
                           option.highlight 
-                            ? 'bg-gradient-to-r from-red-500 to-pink-500' 
+                            ? 'bg-red-500' 
                             : option.active 
                               ? 'bg-gray-200 group-hover:bg-red-100' 
                               : 'bg-gray-100'
@@ -183,7 +182,7 @@ const Support = () => {
                     href={option.link}
                     className={`group/btn relative overflow-hidden py-4 px-6 rounded-2xl font-bold text-base transition-all duration-300 flex items-center justify-center gap-3 ${
                       option.highlight
-                        ? 'bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white shadow-lg shadow-red-200 hover:shadow-xl hover:shadow-red-300'
+                        ? 'bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-200 hover:shadow-xl hover:shadow-red-300'
                         : 'bg-gray-900 hover:bg-black text-white shadow-lg hover:shadow-xl'
                     } transform hover:scale-105 active:scale-95`}
                   >

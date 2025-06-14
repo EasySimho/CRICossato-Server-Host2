@@ -14,22 +14,47 @@ const Navbar = () => {
 
   const handleNavClick = (section: string) => {
     if (location.pathname === '/') {
-      // Scroll direttamente
-      const el = document.getElementById(section);
-      if (el) {
-        window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
-      }
+      // Scroll direttamente se siamo già sulla home
+      scroller.scrollTo(section, {
+        duration: 500,
+        delay: 0,
+        smooth: 'easeInOutQuart',
+        offset: -80
+      });
     } else {
-      // Vai alla home e scrolla dopo il render
-      navigate('/', { replace: false });
-      setTimeout(() => {
-        const el = document.getElementById(section);
-        if (el) {
-          window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
-        }
-      }, 300); // delay per assicurarsi che la home sia caricata
+      // Naviga alla home con lo stato per indicare dove scrollare
+      navigate('/', { state: { scrollTo: section } });
     }
   };
+
+  // Effetto per gestire lo scroll quando arriviamo sulla home da un'altra pagina
+  useEffect(() => {
+    if (location.pathname === '/' && location.state?.scrollTo) {
+      const targetSection = location.state.scrollTo;
+      
+      // Usa un timeout più lungo e verifica che l'elemento esista
+      const scrollToSection = () => {
+        const element = document.getElementById(targetSection);
+        if (element) {
+          scroller.scrollTo(targetSection, {
+            duration: 500,
+            delay: 0,
+            smooth: 'easeInOutQuart',
+            offset: -80
+          });
+        } else {
+          // Se l'elemento non esiste ancora, riprova dopo un breve delay
+          setTimeout(scrollToSection, 100);
+        }
+      };
+
+      // Aspetta che il componente sia completamente montato
+      setTimeout(scrollToSection, 100);
+      
+      // Pulisci lo state per evitare scroll multipli
+      window.history.replaceState({}, document.title);
+    }
+  }, [location]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -102,7 +127,6 @@ const Navbar = () => {
               <Link
                 to="/"
                 className="cursor-pointer"
-                
               >
                 <img
                   src="/LogoCri.svg"
@@ -131,52 +155,19 @@ const Navbar = () => {
                     />
                   </Link>
                 ) : idx === navItems.length - 1 ? (
-                  location.pathname === '/' ? (
-                    <ScrollLink
-                      key={item.name}
-                      to={item.to}
-                      spy={true}
-                      smooth={true}
-                      offset={-80}
-                      duration={500}
-                      className="ml-4 bg-red-600 text-white px-5 py-2 rounded-full font-semibold shadow hover:bg-red-700 transition-colors duration-300 cursor-pointer"
-                    >
-                      {item.name}
-                    </ScrollLink>
-                  ) : (
-                    <Link
-                      key={item.name}
-                      to="/"
-                      state={{ scrollTo: item.to }}
-                      className="ml-4 bg-red-600 text-white px-5 py-2 rounded-full font-semibold shadow hover:bg-red-700 transition-colors duration-300 cursor-pointer"
-                    >
-                      {item.name}
-                    </Link>
-                  )
-                ) : location.pathname === '/' ? (
-                  <ScrollLink
+                  // Bottone Donazioni
+                  <button
                     key={item.name}
-                    to={item.to}
-                    spy={true}
-                    smooth={true}
-                    offset={-80}
-                    duration={500}
-                    className={`relative cursor-pointer text-lg font-medium transition-colors duration-300 ${isScrolled ? 'text-gray-800 hover:text-red-600' : 'text-white hover:text-white'
-                      }`}
-                    onMouseEnter={() => setHoveredItem(item.name)}
-                    onMouseLeave={() => setHoveredItem(null)}
+                    onClick={() => handleNavClick(item.to)}
+                    className="ml-4 bg-red-600 text-white px-5 py-2 rounded-full font-semibold shadow hover:bg-red-700 transition-colors duration-300 cursor-pointer"
                   >
                     {item.name}
-                    <div
-                      className={`absolute bottom-0 left-0 h-0.5 bg-red-600 transition-all duration-300 ${hoveredItem === item.name ? 'w-full' : 'w-0'
-                        }`}
-                    />
-                  </ScrollLink>
+                  </button>
                 ) : (
-                  <Link
+                  // Altri elementi di navigazione
+                  <button
                     key={item.name}
-                    to="/"
-                    state={{ scrollTo: item.to }}
+                    onClick={() => handleNavClick(item.to)}
                     className={`relative cursor-pointer text-lg font-medium transition-colors duration-300 ${isScrolled ? 'text-gray-800 hover:text-red-600' : 'text-white hover:text-white'
                       }`}
                     onMouseEnter={() => setHoveredItem(item.name)}
@@ -187,7 +178,7 @@ const Navbar = () => {
                       className={`absolute bottom-0 left-0 h-0.5 bg-red-600 transition-all duration-300 ${hoveredItem === item.name ? 'w-full' : 'w-0'
                         }`}
                     />
-                  </Link>
+                  </button>
                 )
               )}
             </div>
@@ -217,32 +208,37 @@ const Navbar = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex flex-col space-y-4">
             {navItems.map((item, idx) =>
-              idx === navItems.length - 1 ? (
-                <ScrollLink
+              item.isRoute ? (
+                <Link
                   key={item.name}
                   to={item.to}
-                  spy={true}
-                  smooth={true}
-                  offset={-80}
-                  duration={500}
-                  className="bg-red-600 text-white py-3 px-6 rounded-md hover:bg-red-700 transition-colors duration-300 text-center font-semibold"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </ScrollLink>
-              ) : (
-                <ScrollLink
-                  key={item.name}
-                  to={item.to}
-                  spy={true}
-                  smooth={true}
-                  offset={-80}
-                  duration={500}
                   className="text-gray-800 hover:text-red-600 text-lg font-medium transition-colors duration-300 py-2"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.name}
-                </ScrollLink>
+                </Link>
+              ) : idx === navItems.length - 1 ? (
+                <button
+                  key={item.name}
+                  onClick={() => {
+                    handleNavClick(item.to);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="bg-red-600 text-white py-3 px-6 rounded-md hover:bg-red-700 transition-colors duration-300 text-center font-semibold"
+                >
+                  {item.name}
+                </button>
+              ) : (
+                <button
+                  key={item.name}
+                  onClick={() => {
+                    handleNavClick(item.to);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="text-gray-800 hover:text-red-600 text-lg font-medium transition-colors duration-300 py-2 text-left"
+                >
+                  {item.name}
+                </button>
               )
             )}
           </div>

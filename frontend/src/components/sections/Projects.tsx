@@ -114,7 +114,7 @@ const Projects = () => {
   }
 
   return (
-    <section id="projects" className="py-12 sm:py-16 md:py-20 bg-gray-50 overflow-hidden">
+    <section id="projects" className="py-12 sm:py-16 md:py-20 bg-white overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header with creative design */}
         <div className="relative mb-10 sm:mb-16">
@@ -123,24 +123,20 @@ const Projects = () => {
           <div className="absolute top-1/3 left-1/3 w-16 sm:w-20 h-16 sm:h-20 rounded-full bg-red-600 opacity-10"></div>
           <div className="absolute top-2/3 right-1/3 w-12 sm:w-16 h-12 sm:h-16 rounded-full bg-red-600 opacity-10"></div>
 
-          <div className="text-center relative">
-            <div className="inline-block">
-              <span className="inline-block px-3 sm:px-4 py-1 text-xs font-semibold text-red-600 bg-red-100 rounded-full mb-2 sm:mb-3">
-                I NOSTRI CORSI
-              </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-                Impara e cresci con noi
-              </h2>
-              <div className="flex justify-center mb-4 sm:mb-6">
-                <div className="h-1 w-8 sm:w-10 bg-gray-300 rounded"></div>
-                <div className="h-1 w-12 sm:w-16 bg-red-600 mx-2 rounded"></div>
-                <div className="h-1 w-8 sm:w-10 bg-gray-300 rounded"></div>
-              </div>
-              <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
-                Scopri i corsi che offre la nostra associazione,
-                con impegno e dedizione ogni giorno.
-              </p>
+          <div className="text-center mb-16">
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+               La nostra selezione 
+              <span className="text-red-600 block">di corsi</span>
+            </h1>
+            <div className="flex justify-center mb-8">
+              <div className="h-1 w-12 bg-gray-300 rounded"></div>
+              <div className="h-1 w-20 bg-red-600 mx-3 rounded"></div>
+              <div className="h-1 w-12 bg-gray-300 rounded"></div>
             </div>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Incontra il team di professionisti e volontari che ogni giorno si impegna
+              per realizzare i nostri progetti e supportare la comunità con passione e dedizione.
+            </p>
           </div>
         </div>
 
@@ -150,11 +146,10 @@ const Projects = () => {
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
-                activeCategory === category
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${activeCategory === category
                   ? 'bg-red-600 text-white shadow-md'
                   : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
+                }`}
             >
               {category}
             </button>
@@ -169,9 +164,6 @@ const Projects = () => {
               className="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500"
             >
               {/* Decorative element */}
-              <div className="absolute top-0 right-0 w-16 sm:w-24 h-16 sm:h-24">
-                <div className="absolute transform rotate-45 bg-red-600 opacity-10 w-16 sm:w-24 h-4 sm:h-6 -right-4 sm:-right-6 top-6 sm:top-8"></div>
-              </div>
 
               {/* Project Image with overlay */}
               <div className="relative h-48 sm:h-56 overflow-hidden">

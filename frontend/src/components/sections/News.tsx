@@ -15,6 +15,36 @@ interface NewsItem {
   category: string;
 }
 
+const mockNews = [
+  {
+    id: 1,
+    title: "Nuovo corso di primo soccorso",
+    excerpt: "Iniziano le iscrizioni per il corso di primo soccorso di base. Un'opportunità per imparare le tecniche essenziali di soccorso.",
+    image: "/api/placeholder/400/300",
+    date: "2024-03-15",
+    readTime: "5 min",
+    category: "Corsi"
+  },
+  {
+    id: 2,
+    title: "Giornata della Croce Rossa",
+    excerpt: "Celebriamo insieme la Giornata Mondiale della Croce Rossa con eventi e attività per tutta la comunità.",
+    image: "/api/placeholder/400/300", 
+    date: "2024-05-08",
+    readTime: "3 min",
+    category: "Eventi"
+  },
+  {
+    id: 3,
+    title: "Campagna di raccolta sangue",
+    excerpt: "Partecipa alla nostra campagna di raccolta sangue. Il tuo contributo può salvare vite.",
+    image: "/api/placeholder/400/300",
+    date: "2024-04-20",
+    readTime: "4 min",
+    category: "Iniziative"
+  }
+];
+
 const News = () => {
   const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -31,8 +61,9 @@ const News = () => {
         const data = await response.json();
         setNewsItems(data);
       } catch (err) {
-        setError('Errore nel caricamento delle notizie');
         console.error('Error fetching news:', err);
+        setNewsItems(mockNews); // Use mock data when API fails
+        setError(null); // Clear error since we're using mock data
       } finally {
         setLoading(false);
       }
@@ -51,16 +82,6 @@ const News = () => {
     );
   }
 
-  if (error) {
-    return (
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center text-red-600">{error}</div>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <>
       <section id="news" className="py-12 sm:py-16 md:py-20 bg-white">
@@ -71,13 +92,18 @@ const News = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-10 sm:mb-16"
+            className="text-center mb-16"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 leading-tight">
               Ultime Notizie
-            </h2>
-            <div className="w-16 sm:w-20 h-1 bg-red-600 mx-auto mb-4 sm:mb-6"></div>
-            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
+              <span className="text-red-600 block">e Eventi</span>
+            </h1>
+            <div className="flex justify-center mb-8">
+              <div className="h-1 w-12 bg-gray-300 rounded"></div>
+              <div className="h-1 w-20 bg-red-600 mx-3 rounded"></div>
+              <div className="h-1 w-12 bg-gray-300 rounded"></div>
+            </div>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Resta aggiornato sulle nostre attività, eventi e iniziative
               per la comunità.
             </p>

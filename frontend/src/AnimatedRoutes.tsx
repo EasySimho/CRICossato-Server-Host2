@@ -52,11 +52,11 @@ function AnimatedRoutes() {
                   <section id="chi-siamo">
                     <ChiSiamo />
                   </section>
-                  <section id="corsi">
-                    <Projects />
-                  </section>
                   <section id="attivita">
                     <Attivita />
+                  </section>
+                  <section id="corsi">
+                    <Projects />
                   </section>
                   <section id="prenota-servizio">
                     <PrenotaServizio />
